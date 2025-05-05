@@ -2,199 +2,153 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Message</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+  <title>For My Bestie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
   <style>
-
+    /* Reset */
+    * { margin:0; padding:0; box-sizing:border-box; }
     html, body {
-      margin: 0; padding: 0; height: 100%; overflow: hidden;
-      background: #000; font-family: 'Roboto Mono', monospace;
-      position: relative;
+      height:100%;
+      overflow:hidden;
+      font-family:'Poppins', sans-serif;
+      position:relative;
+      color:#fff;
     }
 
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-      opacity: 0.1; pointer-events: none; z-index: 0;
-    }
-
-    .particle {
-      position: absolute; background: #fff; border-radius: 50%;
-      opacity: 0; animation: drift 12s linear infinite; z-index: 0;
-    }
-    @keyframes drift {
-      0%   { opacity: 0; transform: translate(0,0) scale(0.4); }
-      30%  { opacity: 0.7; }
-      60%  { opacity: 0.3; }
-      100% { opacity: 0; transform: translate(100vw,-100vh) scale(1.2); }
-    }
-
- 
+    /* Brighter Starfield layers */
     body {
-      display: flex; align-items: center; justify-content: center; text-align: left;
+      background-color: #000;
+      background-image:
+        radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px);
+      background-size: 50px 50px, 100px 100px, 150px 150px;
+      background-blend-mode: screen;
+      animation: moveStars 60s linear infinite;
     }
-    .container {
-      position: relative; z-index: 2;
-      width: 90%; max-width: 600px; max-height: 90vh;
-      padding: 2.5rem; background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(12px); border-radius: 16px;
-      box-shadow: 0 0 30px rgba(255,255,255,0.1);
-      overflow-y: auto; animation: fadeIn 1s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-  
-    .line {
-      display: inline-block; white-space: pre-wrap; word-break: break-word;
-      font-size: 1.2rem; margin-bottom: 0.7rem; color: #eee;
-    }
-    .cursor {
-      display: inline-block; width: .15em; background: #eee;
-      animation: blink 0.7s steps(1) infinite;
-      vertical-align: bottom; margin-left: 2px;
-    }
-    @keyframes blink {
-      0%,100% { opacity: 1; }
-      50%     { opacity: 0; }
+    @keyframes moveStars {
+      from {
+        background-position: 0 0,   0 0,   0 0;
+      }
+      to {
+        background-position: -2000px 1000px, 1000px -500px, 500px 2000px;
+      }
     }
 
- 
-    .heart {
-      position: fixed; z-index: 2; font-size: 2.4rem; color: #ff6b81;
-      animation: float 3s ease-in-out infinite; pointer-events: none;
+    /* Stronger, pulsing nebula overlay */
+    body::before {
+      content:'';
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      background: linear-gradient(
+        120deg,
+        rgba(80, 0, 120, 0.4),
+        rgba(0, 60, 90, 0.4),
+        rgba(120, 0, 80, 0.4)
+      );
+      animation: nebulaPulse 12s ease-in-out infinite alternate;
+      mix-blend-mode: overlay;
+      z-index:0;
     }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50%     { transform: translateY(-12px); }
-    }
-    .heart1 { top: 2%; right: 2%; animation-delay: 0s; }
-    .heart2 { bottom: 2%; left: 2%; animation-delay: 1s; }
-    .heart3 { top: 2%; left: 2%; animation-delay: 2s; }
-    .heart4 { bottom: 2%; right: 2%; animation-delay: 3s; }
-
-   
-    .tooltip {
-      position: absolute; top: 50%; right: 2.5%; transform: translateY(-50%);
-      display: none; z-index: 2;
-    }
-    .tooltip button {
-      padding: 0.6rem 1.2rem; background: #fff; color: #222;
-      border: none; border-radius: 6px; cursor: pointer;
-      font-size: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-    .tooltip .tooltiptext {
-      visibility: hidden; width: 80px; background: #555; color: #fff;
-      text-align: center; border-radius: 4px; padding: 5px 0;
-      position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
-      opacity: 0; transition: opacity 0.3s;
-      font-size: 0.8rem;
-    }
-    .tooltip:hover .tooltiptext {
-      visibility: visible; opacity: 1;
+    @keyframes nebulaPulse {
+      from { opacity:0.4; }
+      to   { opacity:0.7; }
     }
 
-    /* responsive tweaks */
-    @media (max-width:700px) {
-      .heart { font-size:1.8rem; }
-      .container { padding:1.2rem; }
-      .tooltip { right:1rem; }
+    /* Popup text */
+    #popup {
+      position:absolute;
+      top:50%; left:50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity:0;
+      font-size:2.2rem;
+      font-weight:700;
+      text-align:center;
+      padding:0 1rem;
+      max-width:90%;
+      z-index:1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    /* Final button */
+    #proceed {
+      display:none;
+      position:absolute;
+      top:65%; left:50%;
+      transform: translateX(-50%);
+      padding:0.8rem 2rem;
+      background:#fff;
+      color:#222;
+      font-size:1rem;
+      font-weight:500;
+      border:none;
+      border-radius:30px;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.4);
+      opacity:0;
+      z-index:1;
+      transition: opacity 0.6s ease, transform 0.3s;
+    }
+    #proceed:hover {
+      transform: translateX(-50%) scale(1.05);
+      background:#f0f0f0;
     }
   </style>
 </head>
 <body>
-  <!-- Particles -->
+
+  <div id="popup"></div>
+  <button id="proceed" onclick="location.href='index.html'">Click this bestieeee</button>
+
   <script>
-    const count = 80;
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const size = Math.random() * 3 + 1;
-      p.style.width = size + 'px';
-      p.style.height = size + 'px';
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.top = Math.random() * 100 + 'vh';
-      p.style.animationDuration = (Math.random() * 15 + 8) + 's';
-      p.style.animationDelay = -(Math.random() * 15) + 's';
-      p.style.opacity = Math.random() * 0.6 + 0.2;
-      document.body.appendChild(p);
-    }
-  </script>
-
-  <!-- Floating hearts -->
-  <div class="heart heart1">❤️</div>
-  <div class="heart heart2">❤️</div>
-  <div class="heart heart3">❤️</div>
-  <div class="heart heart4">❤️</div>
-
-  <!-- Background audio -->
-  <audio id="bgm" src="lofi.mp3" autoplay loop></audio>
-  <script> document.getElementById('bgm').volume = 0.1; </script>
-
-
-  <div class="container">
-    <div><span class="line" id="line1"></span><span class="cursor" id="cursor1"></span></div>
-    <div><span class="line" id="line2"></span><span class="cursor" id="cursor2"></span></div>
-    <div><span class="line" id="line3"></span><span class="cursor" id="cursor3"></span></div>
-    <div><span class="line" id="line4"></span><span class="cursor" id="cursor4"></span></div>
-    <div><span class="line" id="line5"></span><span class="cursor" id="cursor5"></span></div>
-    <div><span class="line" id="line6"></span><span class="cursor" id="cursor6"></span></div>
-    <div><span class="line" id="line7"></span><span class="cursor" id="cursor7"></span></div>
-    <div><span class="line" id="line8"></span><span class="cursor" id="cursor8"></span></div>
-    <div><span class="line" id="line9"></span><span class="cursor" id="cursor9"></span></div>
-  </div>
-
- 
-  <div class="tooltip" id="nextWrapper">
-    <button id="nextBtn" onclick="location.href='gift.html'">Next Po ➔</button>
-    <div class="tooltiptext">Someone's out there !</div>
-  </div>
-
- 
-  <script>
-    const lines = [
-      "I may never know every sacrifice you’ve made, but I see how much you’ve given up, bestie.",
-      "I remember those nights when you were so tired but kept studying, giving up sleep and fun just to chase your dream and make your parents proud.",
-      "I know there were days when everything felt too heavy and you wondered if you could keep going.",
-      "But even then, you found the strength to get back up, even with tears in your eyes.",
-      "That hope you held onto, even when you felt empty, is something I deeply admire.",
-      "You faced your hardest chapters, kept trying, and never let the tough days win. That’s what makes you truly special.",
-      "I wish I could have been there for you during those lonely moments and your silent battles, just to sit beside you so you wouldn’t have to go through it alone.",
-      "I want to be by your side whenever you’re down, and I hope to know even more about you as time goes on.",
-      "I am so proud of you. No matter what happens, I’ll always be here for you, and I’ll always believe in you. ❤️"
+    const messages = [
+      "Oye BESTIE",
+      "Idk if you will like this, but I made it for you.",
+      "I know you are a bit tired.",
+      "But I hope this makes you smile.",
+      "Soo... Aramikalama?",
+      "You did it—you finished NEET!",
+      "The day before NEET is always the hardest.",
+      "Exam day felt like a mountain to climb.",
+      "But the day after NEET is pure freedom.",
+      "Like removing a huge weight off your shoulders!",
+      "You worked so hard for this.",
+      "You deserve to be proud of yourself.",
+      "What matters is you never gave up.",
+      "And that’s what truly counts.",
+      "I’m so proud of how far you’ve come 💖"
     ];
 
-    function typeLine(text, lineId, cursorId) {
-      return new Promise(res => {
-        const el = document.getElementById(lineId),
-              cursor = document.getElementById(cursorId);
-        let i = 0;
-        (function tick() {
-          if (i < text.length) {
-            el.textContent += text[i++];
-            setTimeout(tick, 40);
-          } else {
-            cursor.style.display = 'none';
-            return res();
-          }
-        })();
-      });
+    const popup = document.getElementById('popup');
+    const btn   = document.getElementById('proceed');
+
+    function wait(ms) {
+      return new Promise(res => setTimeout(res, ms));
     }
 
-    async function startTyping() {
-      for (let i = 0; i < lines.length; i++) {
-        await typeLine(lines[i], `line${i+1}`, `cursor${i+1}`);
+    async function play() {
+      for (let msg of messages) {
+        popup.textContent = msg;
+        // pop in
+        popup.style.opacity   = '1';
+        popup.style.transform = 'translate(-50%, -50%) scale(1)';
+        // hold longer
+        await wait(3500);
+        // pop off
+        popup.style.opacity   = '0';
+        popup.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        await wait(800);
       }
-      // all done → reveal button
-      const wrapper = document.getElementById('nextWrapper');
-      wrapper.style.display = 'block';
+      // reveal button
+      btn.style.display = 'block';
+      await wait(50);
+      btn.style.opacity = '1';
     }
 
-    window.onload = startTyping;
+    document.addEventListener('DOMContentLoaded', play);
   </script>
 </body>
 </html>
