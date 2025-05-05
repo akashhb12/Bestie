@@ -8,12 +8,13 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
-      width: 100%; height: 100%; overflow: hidden;
+      width: 100%; height: 100%;
       font-family: 'Roboto', sans-serif;
       background-color: #fff;
+      overflow: hidden;
       position: relative;
     }
-   
+
     #title {
       position: absolute;
       top: 1.5rem;
@@ -26,18 +27,31 @@
       opacity: 0;
       transition: opacity 0.5s;
     }
+
     #cat-wrapper {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
     }
-    #cat { display: block; max-width: 300px; border-radius: 50%; }
+
+    #cat {
+      display: block;
+      width: 80vw;
+      max-width: 300px;
+      height: auto;
+      border-radius: 50%;
+    }
+
     .cloud {
       position: absolute;
       background: rgba(255,255,255,0.9);
       border-radius: 50px;
-      padding: .8rem 1.2rem;
+      padding: 0.6rem 1rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       font-size: 1rem;
       color: #333;
@@ -48,22 +62,22 @@
       white-space: nowrap;
       transition: all 0.3s ease;
     }
+
     .cloud::after {
       content: '';
       position: absolute;
       border: 10px solid transparent;
       border-top-color: rgba(255,255,255,0.9);
-      top: 100%; left: 20px;
+      top: 100%;
+      left: 20px;
     }
-    @keyframes cloudIn { to { opacity:1; transform:scale(1);} }
 
-   
+    @keyframes cloudIn {
+      to { opacity: 1; transform: scale(1); }
+    }
+
     #nextBtn {
-      position: absolute;
-      top: 50%;
-      right: 2rem;
-      transform: translateY(-50%) scale(0.8);
-      padding: .8rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       background: #333;
       color: #fff;
       font-size: 1rem;
@@ -74,32 +88,64 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       opacity: 0;
       visibility: hidden;
+      transform: scale(0.8);
       transition: opacity 0.5s ease, transform 0.3s ease;
       z-index: 3;
     }
+
     #nextBtn.show {
       opacity: 1;
       visibility: visible;
-      transform: translateY(-50%) scale(1);
+      transform: scale(1);
+    }
+
+    /* Responsive tweaks for smaller screens */
+    @media (max-width: 600px) {
+      #title {
+        font-size: 1.5rem;
+        top: 1rem;
+        left: 1rem;
+      }
+
+      #cat-wrapper {
+        transform: translate(-50%, -45%);
+        gap: 1.2rem;
+      }
+
+      #cat {
+        width: 70vw;
+        max-width: 220px;
+      }
+
+      .cloud {
+        font-size: 0.9rem;
+        white-space: normal;
+        text-align: center;
+        padding: 0.5rem 0.8rem;
+        max-width: 180px;
+      }
+
+      .cloud::after {
+        left: 10px;
+      }
+
+      #nextBtn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Heading -->
   <div id="title">FOR BESTIEEE</div>
 
-  <!-- Cat image centered -->
   <div id="cat-wrapper">
-    <img id="cat" src="cat.jpeg" alt="cat_image">
+    <img id="cat" src="cat.jpeg" alt="cat_image" />
+    <button id="nextBtn" onclick="location.href='final.html'">Go to Next</button>
   </div>
 
-  <!-- Next button to the right -->
-  <button id="nextBtn" onclick="location.href='final.html'">Go to Next</button>
-
-  <!-- Background audio -->
   <audio id="bgm" src="lofi.mp3" loop></audio>
 
-  <!-- Pop-up clouds and audio init -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const messages = [

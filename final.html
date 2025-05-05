@@ -83,6 +83,16 @@
     audio {
       display: none;
     }
+
+    /* Mobile-specific styles */
+    @media (max-width: 600px) {
+      .line {
+        font-size: 1rem;
+      }
+      .container {
+        padding: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -109,6 +119,7 @@ And don’t you forget, you are a truly amazing person, dhanya ❤️. Pat yours
     const lineEl = document.getElementById('line');
     const cursor = document.getElementById('cursor');
     let idx = 0;
+
     function type() {
       if (idx < text.length) {
         lineEl.textContent += text[idx++];
@@ -117,6 +128,7 @@ And don’t you forget, you are a truly amazing person, dhanya ❤️. Pat yours
         cursor.style.display = 'none';
       }
     }
+
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(type, 800);
       document.getElementById('bgm').volume = 0.2;
