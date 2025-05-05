@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Final Thoughts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      font-family: 'Poppins', sans-serif;
+      color: #eee;
+      position: relative;
+      overflow: auto;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(60, 0, 80, 0.6), transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(0, 60, 100, 0.6), transparent 60%);
+      animation: pulse 10s ease-in-out infinite alternate;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes pulse {
+      from { opacity: 0.5; }
+      to { opacity: 0.8; }
+    }
+    .stars {
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(#fff 1px, transparent 1px),
+        radial-gradient(#fff 1px, transparent 1px);
+      background-size: 50px 50px, 100px 100px;
+      background-position: 0 0, 50px 50px;
+      animation: drift 80s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes drift {
+      from { background-position: 0 0, 50px 50px; }
+      to { background-position: -1000px 1000px, 1000px -1000px; }
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 5rem auto;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+    }
+    .line {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      min-height: 1.6em;
+    }
+    .cursor {
+      display: inline-block;
+      width: 0.1em;
+      background: #eee;
+      animation: blink 0.7s steps(1) infinite;
+      vertical-align: bottom;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="container">
+    <div class="line" id="line"></div><span class="cursor" id="cursor"></span>
+  </div>
+  <audio id="bgm" src="lofi.mp3" autoplay loop></audio>
+  <script>
+    const text = `It’s okay if things didn’t go as planned, dhanya. Sila times, life surprises us and knocks us off balance.
+
+But through every stumble, you’ve stood tall. That itself is something beautiful.
+
+The exam was tough for everyone. But what truly matters is—you never gave up till the very last moment. That strength shines brighter than any result.
+
+You gave it your all, and that is something to be deeply proud of. Dhanya, adhum podhum. Vera edhuvum vendam ❤️
+
+I know disappointment feels heavy. But lift your chin, smile a little, and let yourself heal. Eat well, rest plenty. Take care of your lovely self.
+
+Amma and appa will always stand by you—avanga epovum un kooda irpanga ❤️
+
+And don’t you forget, you are a truly amazing person, dhanya ❤️. Pat yourself for all the effort, all the tears, and all the heart you gave. You did your best. That’s more than enough.`;
+
+    const lineEl = document.getElementById('line');
+    const cursor = document.getElementById('cursor');
+    let idx = 0;
+    function type() {
+      if (idx < text.length) {
+        lineEl.textContent += text[idx++];
+        setTimeout(type, 50);
+      } else {
+        cursor.style.display = 'none';
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(type, 800);
+      document.getElementById('bgm').volume = 0.2;
+    });
+  </script>
+</body>
+</html>

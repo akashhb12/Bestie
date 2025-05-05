@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Heartwarming Pop-ups</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff;
+      position: relative;
+    }
+   
+    #title {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+      z-index: 3;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    #cat-wrapper {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    #cat { display: block; max-width: 300px; border-radius: 50%; }
+    .cloud {
+      position: absolute;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50px;
+      padding: .8rem 1.2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-size: 1rem;
+      color: #333;
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      z-index: 2;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+    .cloud::after {
+      content: '';
+      position: absolute;
+      border: 10px solid transparent;
+      border-top-color: rgba(255,255,255,0.9);
+      top: 100%; left: 20px;
+    }
+    @keyframes cloudIn { to { opacity:1; transform:scale(1);} }
+
+   
+    #nextBtn {
+      position: absolute;
+      top: 50%;
+      right: 2rem;
+      transform: translateY(-50%) scale(0.8);
+      padding: .8rem 1.5rem;
+      background: #333;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, transform 0.3s ease;
+      z-index: 3;
+    }
+    #nextBtn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Heading -->
+  <div id="title">FOR BESTIEEE</div>
+
+  <!-- Cat image centered -->
+  <div id="cat-wrapper">
+    <img id="cat" src="cat.jpeg" alt="cat_image">
+  </div>
+
+  <!-- Next button to the right -->
+  <button id="nextBtn" onclick="location.href='final.html'">Go to Next</button>
+
+  <!-- Background audio -->
+  <audio id="bgm" src="lofi.mp3" loop></audio>
+
+  <!-- Pop-up clouds and audio init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const messages = [
+        "💖 You're amazing!",
+        "🌟 Keep shining!",
+        "😊 Thanks for being you!",
+        "✨ Spread love everywhere!",
+        "🌈 Pat yourself for your hard work!",
+        "💖 You deserve everything!",
+        "🌈 You're fantastic!",
+        "💖 I'm so proud of you!"
+      ];
+      const title = document.getElementById('title');
+      const nextBtn = document.getElementById('nextBtn');
+      const bgm = document.getElementById('bgm');
+
+      bgm.volume = 0.2;
+      bgm.play().catch(err => console.warn('Autoplay prevented:', err));
+
+      function spawnCloud(message, idx, total) {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        cloud.textContent = message;
+        document.body.appendChild(cloud);
+
+        const img = document.getElementById('cat');
+        const rect = img.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        requestAnimationFrame(() => {
+          const angle = (idx / total) * Math.PI * 2;
+          const radius = rect.width / 2 + 150;
+          const boxWidth = cloud.offsetWidth;
+          const boxHeight = cloud.offsetHeight;
+          const x = centerX + Math.cos(angle) * radius - boxWidth / 2;
+          const y = centerY + Math.sin(angle) * radius - boxHeight / 2;
+          cloud.style.left = `${x}px`;
+          cloud.style.top = `${y}px`;
+          cloud.style.animation = 'cloudIn 0.6s forwards';
+        });
+
+        if (idx === messages.length - 1) {
+          setTimeout(() => {
+            title.style.opacity = '1';
+            nextBtn.classList.add('show');
+          }, 800);
+        }
+      }
+
+      const total = messages.length;
+      messages.forEach((msg, i) =>
+        setTimeout(() => spawnCloud(msg, i, total), i * 800 + 500)
+      );
+    });
+  </script>
+</body>
+</html>
